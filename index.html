@@ -29,7 +29,47 @@
         <img src="https://100tails.ru/wp-content/uploads/2022/06/red-youtube-logo-png-xl.png" alt="YouTube Logo">
         <p>Как это делать</p>
         <button id="buy">Купить</button>
+        
+        <div id="user-info">
+            <p>Введите ваши данные:</p>
+            <input type="text" id="name" placeholder="Имя">
+            <input type="number" id="age" placeholder="Возраст">
+            <button id="submit-info">Заполнил</button>
+        </div>
     </div>
+    
+    <script>
+        // Обработчик нажатия на кнопку "Заполнил"
+        document.getElementById("submit-info").addEventListener("click", function() {
+            // Получение значения из полей ввода
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+
+            // Создание объекта данных для отправки на сервер
+            const data = {
+                name: name,
+                age: age
+            };
+
+            // Отправка данных на сервер с помощью fetch
+            fetch("/submit-info", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Данные успешно отправлены:", data);
+                alert("Данные успешно отправлены!");
+            })
+            .catch(error => {
+                console.error("Ошибка отправки данных:", error);
+                alert("Ошибка отправки данных.");
+            });
+        });
+    </script>
 </body>
 
 </html>
